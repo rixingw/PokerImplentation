@@ -131,13 +131,6 @@ class Test{
       test("group of 6s", sixes.getLength() == 2, true);
       sixes.display();
 
-      //
-      // cards.clear();
-      // test("clear all",cards.getLength()==0, true);
-      // Card card1 = new Card("Queen", "Diamonds");
-      // Card card2 = new Card("Jack", "Diamonds");
-      //
-      // test(card1.toString() + " == " + card2.toString(), card1.getSuit() == card2.getSuit(), true);
 
   }
 

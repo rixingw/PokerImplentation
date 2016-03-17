@@ -1,4 +1,7 @@
 
+
+
+
 public class Card implements Comparable<Card>{
   private Card next;
   private Card prev;

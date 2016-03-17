@@ -1,7 +1,9 @@
 
 
 class Hand extends Pile<Card>{
-  public Hand(){
+
+  public Hand()
+  {
     super(2);
   }
 }

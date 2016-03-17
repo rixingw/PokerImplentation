@@ -1,7 +1,7 @@
+import org.omg.PortableServer.POA;
+
 import java.util.ArrayList;
-
-
-
+import java.util.Collections;
 
 public class PokerAnalyzer{
   private final Pile openCards;
@@ -9,6 +9,8 @@ public class PokerAnalyzer{
   public PokerAnalyzer(Pile cards){
     openCards = cards;
   }
+
+
 
   public HRankStatus analyzeHand(Hand hand){
     HRankStatus result;
@@ -76,11 +78,17 @@ public class PokerAnalyzer{
     Card hCard = allCards.getHighestCard();
     ArrayList<Pile> groups = getValueGroups(allCards);
     if (groups.size() == 1){
-        Pile p = groups.remove(0);
-        met = (p.getLength() == 2);
-        if (met){
-          hCard = p.getHighestCard();
-        }
+        Pile p = groups.get(0);
+        met = true;
+//        Card temp = hCard;
+        hCard = p.getEntry(1);
+        hCard.setPrev(isHighCard(hand).getHighestCard());
+//        met = (p.getLength() == 2);
+//        if (met){
+//          Card temp = hCard;
+//          hCard = p.getHighestCard();
+//          hCard.setPrev(temp);
+//        }
     }
     HRankStatus hr = HRankStatus.ONE_PAIR;
     hr.setHRank(hCard, met);
@@ -94,19 +102,34 @@ public class PokerAnalyzer{
     Card hCard = allCards.getHighestCard();
     ArrayList<Pile> groups = getValueGroups(allCards);
     if (groups.size() == 2 || groups.size() == 3){
-        Pile p = groups.get(groups.size()-1);
-        if (p.getLength() == 2){
-          met = true;
-          hCard = p.getHighestCard();
-          if (groups.size() >= 2){
-             Pile sec = groups.get(groups.size()-2);
-             Card p1 = sec.getHighestCard();
-             Card p1copy=  new Card(p1.getValue(), p1.getSuit());
-             Card hcopy = new Card(hCard.getValue(), hCard.getSuit());
-             hcopy.setPrev(p1copy);
-             hCard = hcopy;
-          }
+//        Pile p = groups.get(groups.size()-1);
+//        if (p.getLength() == 2){
+//          met = true;
+//          hCard = p.getHighestCard();
+//          if (groups.size() >= 2){
+//             Pile sec = groups.get(groups.size()-2);
+//             Card p1 = sec.getHighestCard();
+//             Card p1copy=  new Card(p1.getValue(), p1.getSuit());
+//             Card hcopy = new Card(hCard.getValue(), hCard.getSuit());
+//             hcopy.setPrev(p1copy);
+//             hCard = hcopy;
+//          }
+//        }
+
+        met = true;
+        hCard = groups.get(0).getEntry(1);
+        Card temp = hCard;
+//        for (Pile p : groups){
+//            temp.setPrev(p.getEntry(1));
+//            temp = temp.getPrev();
+//        }
+
+        for (int i = groups.size()-1; i >= 0; i--){
+            Pile p = groups.get(i);
+            temp.setPrev(p.getEntry(1));
+            temp = temp.getPrev();
         }
+        temp.setPrev(isHighCard(hand).getHighestCard());
     }
     HRankStatus hr = HRankStatus.TWO_PAIR;
     hr.setHRank(hCard, met);
@@ -314,43 +337,12 @@ public class PokerAnalyzer{
     Pile pile = new Pile(openCards.getLength() + hand.getLength());
     pile.join(openCards);
     pile.join(hand);
-
     return pile;
   }
 
 
 
   public static void main(String[] args){
-  //   Card ace = new Card("Ace", "Spades");
-  //   Card two = new Card("Two", "Diamonds");
-  //   Card three = new Card("Three", "Hearts");
-  //   Card four = new Card("Four", "Clubs");
-  //   Card five = new Card("Five", "Spades");
-  //   Card six = new Card("Six", "Diamonds");
-  //   Card seven = new Card("Seven", "Hearts");
-  //   Card eight = new Card("Eight", "Clubs");
-  //   Card nine = new Card("Nine", "Spades");
-  //   Card ten = new Card("Ten", "Diamonds");
-  //   Card jack = new Card("Jack", "Clubs");
-  //   Card queen = new Card("Queen", "Clubs");
-  //   Card king = new Card("King", "Clubs");
-   //
-  //    Pile base = new Pile(5);
-  //  base.addAll(ace, ten, jack, queen, four);
-  //   //
-  //    Hand hand1 = new Hand();
-  //    hand1.addAll(nine, queen);
-    //
-    //  PokerAnalyzer PA = new PokerAnalyzer(base);
-    // HRankStatus hr = PA.isFlush(hand1);
-    // hr.display();
-
-  //  System.out.println("RR:" + PA.numberOfRoyalCards(base));
-  //
-  // HIGHCARD, ONE_PAIR, TWO_PAIR, THREE_OF_A_KIND, STRAIGHT,
-  // FLUSH, FULL_HOUSE, FOUR_OF_A_KIND, STRAIGHT_FLUSH, ROYAL_FLUSH;
-
-
     Card c1 = new Card("Ace", "Diamonds");
     Card c2 = new Card("Three", "Diamonds");
     Card c3 = new Card("Four", "Diamonds");
@@ -368,22 +360,6 @@ public class PokerAnalyzer{
     PokerAnalyzer pk1 = new PokerAnalyzer(gBase);
     HRankStatus stra = pk1.analyzeHand(gHand);
     stra.display();
-
-
-
-  //  PokerAnalyzer pk2= new PokerAnalyzer(gBase);
-  //   HRankStatus fK= pk2.isRoyalFlush(gHand);
-  //   fK.display();
-   //
-  //   HRankStatus f1= pk2.isRoyalFlush(gHand);
-  //   f1.display();
-
-
-  //  System.out.println(pk1.isSequential(gHand));
-
-//    seq.display();
-//
-//
 
   }
 }

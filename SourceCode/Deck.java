@@ -9,8 +9,8 @@ public class Deck extends Pile<Card>{
            this.add(card);
         }
     }
-    this.shuffle();
   }
+
   public Card deal(){
       return remove(1);
   }

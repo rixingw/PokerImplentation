@@ -6,19 +6,22 @@
 
   private Card tieBreaker;
   private boolean matched;
-
+     public Player winner = null;
   public void setHRank(Card hCard, boolean matched){
     this.tieBreaker = hCard;
     this.matched = matched;
   }
 
   public Card getHighestCard(){
-    return tieBreaker;
+
+      return tieBreaker;
   }
 
   public boolean conditionMet(){
-    return matched;
+
+      return matched;
   }
+
 
   public void display(){
     System.out.println("\nHandStatus ");
@@ -28,4 +31,6 @@
     System.out.println("\t2ndTie Breaker: " + tieBreaker.getPrev());
     }
   }
+
+
 }

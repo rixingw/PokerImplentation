@@ -6,15 +6,15 @@ public enum Suit{
   public String toString(){
     char symbol;
     switch(this){
-      case SPADES:    symbol = (char)'\u2664'; break;
-      case HEARTS:    symbol = (char)'\u2661'; break;
-      case DIAMONDS:  symbol = (char)'\u2662'; break;
-      default:        symbol = (char)'\u2667'; break;
+      case SPADES:    symbol = 'S'; break;
+      case HEARTS:    symbol = 'H'; break;
+      case DIAMONDS:  symbol = 'D'; break;
+      default:        symbol = 'C'; break;
     }
-    return Character.toString(symbol).toLowerCase();
+    return Character.toString(symbol).toUpperCase();
   }
 
   public static Suit getSuit(String suit){
-      return Suit.valueOf(suit.toUpperCase());
+    return Suit.valueOf(suit.toUpperCase());
   }
 }

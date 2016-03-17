@@ -255,7 +255,7 @@ public class Pile<T extends Card> implements ListInterface<T>{
     Card curr = topCard;
     while(curr != null){
       int randNum = rand.nextInt(getLength()) + 1;
-      Card randomCard = (Card)getEntry(randNum);
+      Card randomCard = getEntry(randNum);
       swap(randomCard, curr);
       curr = curr.getNext();
     }
@@ -286,7 +286,7 @@ public class Pile<T extends Card> implements ListInterface<T>{
   if (maxcapacity < (pile.getLength() + nCard)) {
       System.out.println(" Capacity is too small , operation aborted!");
   } else{
-      Card toLink = (T)pile.getEntry(1);
+      Card toLink = pile.getEntry(1);
       while(toLink != null){
         // Card next = toLink.getNext();
         // toLink.setNext(null);
@@ -367,7 +367,7 @@ public class Pile<T extends Card> implements ListInterface<T>{
     while (curr != null){
       if (!seq.contains(curr)){
         Card copy = new Card(curr.getValue(), curr.getSuit());
-        seq.add((T)copy);
+        seq.add(copy);
       }
       curr = curr.getNext();
     }

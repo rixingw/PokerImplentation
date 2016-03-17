@@ -1,10 +1,10 @@
-
+import java.util.Objects;
 
 class Player{
-  public int chips;
-  public String name;
+  private int chips;
+  private String name;
   public Hand hand;
-  private boolean folded = false;
+  //private boolean folded = false;
 
   public Player(String name, int chips){
     this.name = name;
@@ -12,26 +12,31 @@ class Player{
     hand = new Hand();
   }
   public int bet(int amount){
-    if (this.chips - amount >= 0){
+    if ((this.chips - amount) >= 0){
       this.chips -= amount;
       return amount;
     }else{
-      this.chips -= amount;
-      return this.chips;
+      int r = this.chips;
+      this.chips = 0;
+      return r;
     }
   }
+  public Hand getHand(){
+    return hand;
+  }
+
+  public int countChips(){return this.chips;}
+
+  public String getName(){return this.name;}
 
   public void winRound(int amount){
     this.chips += amount;
   }
 
-  public void foldRound(boolean fd){
-    this.folded = fd;
+  public void reset(){
+    hand.clear();
   }
 
-  public boolean isFolded(){
-    return this.folded;
-  }
 
   public void addCardtoHand(Card card){
       this.hand.add(card);
